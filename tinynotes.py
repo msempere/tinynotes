@@ -213,12 +213,6 @@ class NoteWindowController(NSObject):
 
         print(f"DEBUG: Total notes: {len(self.app.notes)}")
 
-        rumps.notification(
-            title="TinyNotes",
-            subtitle="Note saved",
-            message=self.note.title
-        )
-
 
 class TinyNotesApp(rumps.App):
     """Main application class for TinyNotes"""
@@ -486,11 +480,6 @@ class TinyNotesApp(rumps.App):
             self.notes.remove(note)
             self.delete_note(note)
             self.build_menu()
-            rumps.notification(
-                title="TinyNotes",
-                subtitle="Note deleted",
-                message=note.title
-            )
 
     def open_note_file(self, _):
         """Open a note file using file picker"""
@@ -568,11 +557,6 @@ class TinyNotesApp(rumps.App):
                     'tell application "System Events" to delete login item "TinyNotes"'
                 ])
                 sender.state = False
-                rumps.notification(
-                    title="TinyNotes",
-                    subtitle="Start at Login",
-                    message="Disabled"
-                )
             else:
                 # Currently disabled, enable it
                 # Get app bundle path
@@ -584,11 +568,6 @@ class TinyNotesApp(rumps.App):
                     f'tell application "System Events" to make login item at end with properties {{path:"{app_path}", hidden:false}}'
                 ])
                 sender.state = True
-                rumps.notification(
-                    title="TinyNotes",
-                    subtitle="Start at Login",
-                    message="Enabled"
-                )
         except Exception as e:
             rumps.alert(f"Error toggling start at login: {e}")
 
