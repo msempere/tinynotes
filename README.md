@@ -13,6 +13,8 @@ brew install --cask tinynotes
 
 The app will appear in your menu bar as a pencil icon.
 
+**Note**: On first launch, macOS may show a dialog asking "Are you sure you want to open this?" because the app is not code-signed. Click "Open" to proceed.
+
 ## Usage
 
 ### Creating Notes
