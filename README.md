@@ -7,7 +7,7 @@ A simple macOS menu bar application for quick note-taking.
 Install via Homebrew:
 
 ```bash
-brew tap yourusername/tinynotes
+brew tap msempere/tinynotes
 brew install --cask tinynotes
 ```
 

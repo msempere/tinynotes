@@ -369,13 +369,11 @@ class TinyNotesApp(rumps.App):
         # Add separator and settings
         self.menu.add(rumps.separator)
 
-        # Add "Start at Login" toggle
-        start_at_login_item = rumps.MenuItem(
+        # Add "Start at Login" toggle (state checked on click to avoid permission prompt)
+        self.menu.add(rumps.MenuItem(
             "Start at Login",
             callback=self.toggle_start_at_login
-        )
-        start_at_login_item.state = self.is_login_item_enabled()
-        self.menu.add(start_at_login_item)
+        ))
 
         # Add separator and "Quit TinyNotes"
         self.menu.add(rumps.separator)
@@ -560,7 +558,10 @@ class TinyNotesApp(rumps.App):
     def toggle_start_at_login(self, sender):
         """Toggle start at login"""
         try:
-            if sender.state:
+            # Check current state (this will trigger permission request first time)
+            is_enabled = self.is_login_item_enabled()
+
+            if is_enabled:
                 # Currently enabled, disable it
                 subprocess.run([
                     "osascript", "-e",
