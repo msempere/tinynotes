@@ -12,8 +12,8 @@ OPTIONS = {
         'CFBundleName': 'TinyNotes',
         'CFBundleDisplayName': 'TinyNotes',
         'CFBundleIdentifier': 'com.tinynotes.app',
-        'CFBundleVersion': '1.0.0',
-        'CFBundleShortVersionString': '1.0.0',
+        'CFBundleVersion': '1.0.1',
+        'CFBundleShortVersionString': '1.0.1',
         'LSUIElement': True,  # Run as menu bar app without dock icon
         'NSHighResolutionCapable': True,
     },
