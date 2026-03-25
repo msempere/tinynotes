@@ -40,3 +40,6 @@ Icon
 
 # Test notes (optional - uncomment if you don't want to track test notes)
 # test_notes.json
+
+# Internal documentation
+CLAUDE.md
