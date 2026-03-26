@@ -363,11 +363,14 @@ class TinyNotesApp(rumps.App):
         # Add separator and settings
         self.menu.add(rumps.separator)
 
-        # Add "Start at Login" toggle (state checked on click to avoid permission prompt)
-        self.menu.add(rumps.MenuItem(
+        # Add "Start at Login" toggle with current state
+        start_at_login_item = rumps.MenuItem(
             "Start at Login",
             callback=self.toggle_start_at_login
-        ))
+        )
+        # Set initial checkbox state based on actual login item status
+        start_at_login_item.state = self.is_login_item_enabled()
+        self.menu.add(start_at_login_item)
 
         # Add separator and "Quit TinyNotes"
         self.menu.add(rumps.separator)
