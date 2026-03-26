@@ -228,9 +228,6 @@ class TinyNotesApp(rumps.App):
         self.notes_dir = Path.home() / "TinyNotes"
         self.notes_dir.mkdir(exist_ok=True)
 
-        # Preferences file for storing settings
-        self.prefs_file = self.notes_dir / ".tinynotes_prefs.json"
-
         # Load existing notes
         self.notes = self.load_notes()
 
@@ -362,19 +359,6 @@ class TinyNotesApp(rumps.App):
         # Add separator and "Open Note File..."
         self.menu.add(rumps.separator)
         self.menu.add(rumps.MenuItem("Open Note File...", callback=self.open_note_file))
-
-        # Add separator and settings
-        self.menu.add(rumps.separator)
-
-        # Add "Start at Login" toggle
-        # Load saved preference to avoid permission prompt on startup
-        start_at_login_item = rumps.MenuItem(
-            "Start at Login",
-            callback=self.toggle_start_at_login
-        )
-        prefs = self.load_preferences()
-        start_at_login_item.state = prefs.get("start_at_login", False)
-        self.menu.add(start_at_login_item)
 
         # Add separator and "Quit TinyNotes"
         self.menu.add(rumps.separator)
@@ -537,68 +521,6 @@ class TinyNotesApp(rumps.App):
 
                 except Exception as e:
                     rumps.alert(f"Error opening note file: {e}")
-
-    def load_preferences(self):
-        """Load saved preferences"""
-        try:
-            if self.prefs_file.exists():
-                with open(self.prefs_file, 'r') as f:
-                    return json.load(f)
-        except Exception:
-            pass
-        return {}
-
-    def save_preference(self, key, value):
-        """Save a preference setting"""
-        try:
-            prefs = self.load_preferences()
-            prefs[key] = value
-            with open(self.prefs_file, 'w') as f:
-                json.dump(prefs, f)
-        except Exception:
-            pass
-
-    def is_login_item_enabled(self):
-        """Check if app is in login items"""
-        try:
-            result = subprocess.run(
-                ["osascript", "-e", 'tell application "System Events" to get the name of every login item'],
-                capture_output=True,
-                text=True
-            )
-            login_items = result.stdout.strip()
-            return "TinyNotes" in login_items
-        except Exception:
-            return False
-
-    def toggle_start_at_login(self, sender):
-        """Toggle start at login"""
-        try:
-            # Check current state (this will trigger permission request first time)
-            is_enabled = self.is_login_item_enabled()
-
-            if is_enabled:
-                # Currently enabled, disable it
-                subprocess.run([
-                    "osascript", "-e",
-                    'tell application "System Events" to delete login item "TinyNotes"'
-                ])
-                sender.state = False
-                self.save_preference("start_at_login", False)
-            else:
-                # Currently disabled, enable it
-                # Get app bundle path
-                bundle = NSBundle.mainBundle()
-                app_path = bundle.bundlePath()
-
-                subprocess.run([
-                    "osascript", "-e",
-                    f'tell application "System Events" to make login item at end with properties {{path:"{app_path}", hidden:false}}'
-                ])
-                sender.state = True
-                self.save_preference("start_at_login", True)
-        except Exception as e:
-            rumps.alert(f"Error toggling start at login: {e}")
 
     def quit_app(self, _):
         """Quit the application"""

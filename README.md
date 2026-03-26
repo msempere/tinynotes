@@ -27,7 +27,6 @@ Click the menu bar icon and select "New Note". Type your note with an optional t
 - Clear all content to delete a note
 - Notes are sorted by most recently modified
 - Use "Open Note File..." to import external notes
-- Toggle "Start at Login" to launch TinyNotes automatically
 
 ### Note Format
 
