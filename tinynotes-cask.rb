@@ -1,6 +1,6 @@
 cask "tinynotes" do
-  version "1.0.1"
-  sha256 "fdd77930dc313d8a9e9d0d2e1e184444cd8ea44884a530b43c45502d5ca9f432"
+  version "1.0.2"
+  sha256 "0ac008488711dc2e2684cfad53f462a7d22f96bb64c7e1bce6723f29771163ff"
 
   url "https://github.com/msempere/tinynotes/releases/download/v#{version}/TinyNotes-#{version}.zip"
   name "TinyNotes"
